@@ -1,0 +1,14 @@
+# zendframework/skeleton-application デフォルト → doc_root/ を追記
+doc_root/.vagrant/
+doc_root/vendor/
+doc_root/config/development.config.php
+doc_root/data/cache/*
+!doc_root/data/cache/.gitkeep
+doc_root/phpunit.xml
+
+# Docker Compose
+.env
+
+# development environment
+.devcontainer/
+.vscode/launch.json
