@@ -2,7 +2,7 @@
 
 ## DB
 
-### Sequel Ace をインストールする
+### Sequel Ace をインストールする（使用する場合）
 
 - Sequel Ace は、データベースに接続するツール。
 
