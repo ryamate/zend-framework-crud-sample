@@ -1,23 +1,66 @@
 # zend-framework-crud-sample
 
-## DB
+[ブログ記事：諸事情で*Zend_Framework*を理解する\_2022](https://ryamate.hatenablog.com/entry/2022/03/12/諸事情で_Zend_Framework_を理解する_2022_-_①Docker_での開発環境構築)
 
-### Sequel Ace をインストールする（使用する場合）
-
-- Sequel Ace は、データベースに接続するツール。
-
-- ターミナルで下記コマンドを実行する。
+## クローンして、ブラウザでアクセスするまでの手順
 
 ```bash
-brew install --cask sequel-ace
+$ git clone https://github.com/ryamate/zend-framework-crud-sample.git
+
+$ cd zend-framework-crud-sample
+
+# Dockerコンテナを作成・起動する
+$ docker-compose up -d --build
+
+# composer.lockの内容をもとにパッケージのインストールを行う
+$ docker-compose exec app composer install
 ```
 
-### Sequel Ace を起動して下記を入力して接続をクリックする。
+下記 URL にブラウザでアクセスします
 
-- Host: 127.0.0.1
-- User: db_user
-- Password: secret
-- Database: zf_sample
+[http://localhost/product](http://localhost/product)
+
+## 商品管理ページの構成
+
+| ページ   | 説明                                                                   |
+| -------- | ---------------------------------------------------------------------- |
+| 商品一覧 | 商品の一覧を表示。商品の新規追加や編集、削除のためのリンクボタン表示。 |
+| 商品追加 | 新規商品を追加するためのフォーム。                                     |
+| 商品編集 | 商品を編集するためのフォーム。                                         |
+| 商品削除 | 商品を削除することを確認し、削除するページ。                           |
+
+## products テーブル設計
+
+| フィールド名 | 名前         | データ型     | オプションなど                                                  |
+| ------------ | ------------ | ------------ | --------------------------------------------------------------- |
+| id           | ID           | INTEGER      | PRIMARY KEY, AUTO INCREMENT                                     |
+| item_name    | 商品名       | VARCHAR(256) | NOT NULL                                                        |
+| price        | 商品単価     | INTEGER      | NOT NULL                                                        |
+| image        | 商品画像パス | VARCHAR(256) |                                                                 |
+| delete_flag  | 論理削除     | BOOLEAN      | DEFAULT FALSE, NOT NULL                                         |
+| created_at   | 作成日       | DATETIME     | DEFAULT CURRENT_TIMESTAMP, NOT NULL                             |
+| updated_at   | 更新日       | DATETIME     | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, NOT NULL |
+
+## ディレクトリ構成
+
+Zend Framework のパッケージ `zend-mvc` はモジュールシステムを使用して、各モジュールごとにコードを整理します。
+
+```
+doc_root/
+    module/
+        Application/
+        Product/
+            config/
+            src/
+                Controller/
+                Form/
+                Model/
+            view/
+                product/
+                    product/
+```
+
+Module ディレクトリ以下に、 Product ディレクトリを Application ディレクトリと同一の階層で作成し、 Product に関する MVC 構成をその中で構築します。(Zend Framework は Module 単位で MVC 構成を構築します）
 
 ## データベースの再作成
 
