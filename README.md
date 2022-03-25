@@ -1,6 +1,6 @@
 # zend-framework-crud-sample
 
-[ブログ記事：諸事情で*Zend_Framework*を理解する\_2022](https://ryamate.hatenablog.com/entry/2022/03/12/諸事情で_Zend_Framework_を理解する_2022_-_①Docker_での開発環境構築)
+[ブログ記事：諸事情で Zend Framework を理解する 2022](https://ryamate.hatenablog.com/entry/2022/03/12/諸事情で_Zend_Framework_を理解する_2022_-_①Docker_での開発環境構築)
 
 ## クローンして、ブラウザでアクセスするまでの手順
 
@@ -18,7 +18,7 @@ $ docker-compose exec app composer install
 
 下記 URL にブラウザでアクセスします
 
-[http://localhost/product](http://localhost/product)
+[http://localhost/](http://localhost/)
 
 ## 商品管理ページの構成
 
