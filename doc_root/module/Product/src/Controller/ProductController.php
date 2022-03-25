@@ -2,6 +2,8 @@
 
 namespace Product\Controller;
 
+use Product\Form\ProductForm;
+use Product\Model\Product;
 use Product\Model\ProductTable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -38,5 +40,43 @@ class ProductController extends AbstractActionController
             // コンストラクタの最初のパラメータは、表現したいデータを含む配列。自動的にビュースクリプトに渡される。
             'products' => $this->table->fetchAll(),
         ]);
+    }
+
+    /**
+     * 商品を新規登録する。
+     *
+     * POSTでない場合、フォームデータは送信されていないのでフォームを表示する(zend-mvcでは、ビューモデルの代わりにデータの配列を返せる)。
+     * POSTである場合、フォームの投稿があるため、Productインスタンスを作成し、入力フィルタをフォームに渡し、リクエストインスタンスからフォームに送信されたデータを渡す。
+     * バリデーションNGの場合、フォームを再表示する(バリデーション失敗の内容を、ビューレイヤーに伝える)。
+     * バリデーションOKの場合、フォームからデータを取得し、新しい商品の行を保存し、Redirectコントローラプラグインを使って商品一覧にリダイレクトする。
+     *
+     * @return Response|array
+     */
+    public function addAction()
+    {
+        // ProductFormインスタンスを作成し、送信ボタンのラベルを "新規登録" に設定する。
+        $form = new ProductForm();
+        $form->get('submit')->setValue('新規登録');
+
+        $request = $this->getRequest();
+
+        // POSTでない場合、フォームデータは送信されていないのでフォームを表示する(zend-mvcでは、ビューモデルの代わりにデータの配列を返せる)。
+        if (!$request->isPost()) {
+            return ['form' => $form];
+        }
+
+        // フォームの投稿があるため、Productインスタンスを作成し、入力フィルタをフォームに渡し、リクエストインスタンスからフォームに送信されたデータを渡す。
+        $product = new Product();
+        $form->setInputFilter($product->getInputFilter());
+        $form->setData($request->getPost());
+        // バリデーション失敗の場合、フォームを再表示する(バリデーション失敗の内容を、ビューレイヤーに伝える)。
+        if (!$form->isValid()) {
+            return ['form' => $form];
+        }
+
+        // フォームからデータを取得し、新しい商品の行を保存し、Redirectコントローラプラグインを使って商品一覧にリダイレクトする。
+        $product->exchangeArray($form->getData());
+        $this->table->createProduct($product);
+        return $this->redirect()->toRoute('product');
     }
 }

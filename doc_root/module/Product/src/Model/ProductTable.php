@@ -2,7 +2,6 @@
 
 namespace Product\Model;
 
-use RuntimeException;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
 /**
@@ -34,5 +33,22 @@ class ProductTable
     public function fetchAll()
     {
         return $this->tableGateway->select();
+    }
+
+    /**
+     * データベースに新しい行を作成する。
+     *
+     * @param Product $product 新しく作成する商品のカラム
+     * @return void
+     */
+    public function createProduct(Product $product)
+    {
+        $data = [
+            'item_name' => $product->itemName,
+            'price' => $product->price,
+            'image' => $product->image,
+        ];
+
+        $this->tableGateway->insert($data);
     }
 }
