@@ -6,7 +6,7 @@ ENV TZ=Asia/Tokyo \
     COMPOSER_ALLOW_SUPERUSER=1
 
 RUN set -xe \
-    && apk add --no-cache git=2.30.2-r0 \
+    && apk add --no-cache git=2.30.3-r0 \
     && docker-php-ext-enable xdebug
 
 # composer のインストール
