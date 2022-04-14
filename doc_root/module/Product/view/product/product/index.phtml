@@ -20,6 +20,7 @@ url() の最初のパラメータは URL の作成に使用するルート名で
         <th>ID</th>
         <th>商品名</th>
         <th>商品単価</th>
+        <th>&nbsp;</th>
     </tr>
     <!-- コントローラアクションから割り当てた$productsを繰り返し処理 -->
     <?php foreach ($products as $product) : ?>
@@ -29,6 +30,12 @@ url() の最初のパラメータは URL の作成に使用するルート名で
             <td><?= $this->escapeHtml($product->id) ?></td>
             <td><?= $this->escapeHtml($product->itemName) ?></td>
             <td><?= $this->escapeHtml(number_format($product->price)) ?></td>
+            <!-- レコードの編集と削除を可能にするためのリンクを提供 -->
+            <td>
+                <!-- url() ビューヘルパーの使用 -->
+                <a href="<?= $this->url('product', ['action' => 'edit', 'id' => $product->id]) ?>">編集</a>
+                <a href="<?= $this->url('product', ['action' => 'delete', 'id' => $product->id]) ?>">削除</a>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>

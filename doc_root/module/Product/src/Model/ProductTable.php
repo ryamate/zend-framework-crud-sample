@@ -51,4 +51,46 @@ class ProductTable
 
         $this->tableGateway->insert($data);
     }
+
+    /**
+     * 一行を Product オブジェクトとして取得する。
+     *
+     * @param string $id 商品ID
+     * @return
+     */
+    public function getProduct(string $id)
+    {
+        return $this->tableGateway->select(['id' => $id])->current();
+    }
+
+    /**
+     * データベースの既に存在する行を更新する。
+     *
+     * @param Product $product 既に存在する商品のカラム
+     * @return void
+     */
+    public function editProduct(Product $product)
+    {
+        $data = [
+            'item_name' => $product->itemName,
+            'price' => $product->price,
+            'image' => $product->image,
+        ];
+
+        $product = $this->getProduct($product->id);
+        if (isset($product)) {
+            $this->tableGateway->update($data, ['id' => $product->id]);
+        }
+    }
+
+    /**
+     * 渡された $id の行を完全に削除する。
+     *
+     * @param string $id 商品ID
+     * @return void
+     */
+    public function deleteProduct(string $id)
+    {
+        $this->tableGateway->delete(['id' => (int) $id]);
+    }
 }
