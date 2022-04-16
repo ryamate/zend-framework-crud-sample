@@ -7,6 +7,14 @@ $this->headTitle($title);
 ?>
 <h1><?= $this->escapeHtml($title) ?></h1>
 
+<!-- 新しい商品を追加するためのリンクを作成する。 -->
+<p>
+    <!-- url() ビューヘルパーは zend-mvc と zend-view によって提供され、必要なリンクを作成するために使用される。
+url() の最初のパラメータは URL の作成に使用するルート名で、 2番目のパラメータはルートのプレースホルダに代入する変数の配列。
+この場合、2つのプレースホルダ変数: action と id を受け入れるように設定されたアルバムルートを使用する。 -->
+    <a href="<?= $this->url('product', ['action' => 'add']) ?>">新規登録</a>
+</p>
+
 <table class="table">
     <tr>
         <th>ID</th>
