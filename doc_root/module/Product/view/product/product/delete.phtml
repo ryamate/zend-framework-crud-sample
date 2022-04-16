@@ -1,0 +1,19 @@
+<?php
+$title = '商品の削除';
+$url   = $this->url('product', ['action' => 'delete', 'id' => $id]);
+
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<p>
+    「商品名：<?= $this->escapeHtml($product->itemName) ?>」を削除してよろしいですか？
+</p>
+
+<form action="<?= $url ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?= (int) $product->id ?>" />
+        <input type="submit" class="btn btn-danger" name="del" value="はい" />
+        <input type="submit" class="btn btn-success" name="del" value="いいえ" />
+    </div>
+</form>

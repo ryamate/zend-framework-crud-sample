@@ -46,6 +46,25 @@ class Product implements InputFilterAwareInterface
     }
 
     /**
+     * エンティティのプロパティを配列としてコピーして取得する。
+     *
+     * モデルをフォームにアタッチし、以下2つに使われる。
+     *  - フォームを表示するときの各要素の初期値をモデルから抽出、
+     *  - isValid()でバリデーションに成功すると、フォームのデータをモデルに戻す
+     *
+     * @return array エンティティのプロパティを配列にコピーしたもの
+     */
+    public function getArrayCopy()
+    {
+        return [
+            'id' => $this->id,
+            'item_name' => $this->itemName,
+            'price' => $this->price,
+            'image' => $this->image,
+        ];
+    }
+
+    /**
      * InputFilterAwareInterfaceでは、setInputFilter()とgetInputFilter()という2つのメソッドが定義されており、
      * getInputFilter()のみを実装すればよいので、setInputFilter()からは例外を投げる。
      *
