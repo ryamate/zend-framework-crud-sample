@@ -1,0 +1,28 @@
+<?php
+
+// ページのタイトルと、ブラウザのタイトルバーに表示される headTitle() ビューヘルパーを使用して
+//  <head> セクションのタイトルを設定する。
+$title = '商品一覧';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>商品名</th>
+        <th>商品単価</th>
+    </tr>
+    <!-- コントローラアクションから割り当てた$productsを繰り返し処理 -->
+    <?php foreach ($products as $product) : ?>
+        <tr>
+            <!-- 各アルバムのタイトルとアーティストを表示するテーブルを作成 -->
+            <!-- ビュースクリプトに渡す変数と内部で作成した変数を区別するために、 $this->{variable name} を使用してアクセスする -->
+            <td><?= $this->escapeHtml($product->id) ?></td>
+            <td><?= $this->escapeHtml($product->itemName) ?></td>
+            <td><?= $this->escapeHtml(number_format($product->price)) ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<!-- クロスサイトスクリプティング（XSS）対策のために、escapeHtml()ビューヘルパーを常に使用 -->
