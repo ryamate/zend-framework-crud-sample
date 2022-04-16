@@ -24,4 +24,14 @@ return [
         'username' => 'db_user',
         'password' => 'secret',
     ],
+    'translator' => [
+        'locale' => 'en_US', // デフォルトのロケール（提供されていない場合
+        'translation_file_patterns' => [ // 翻訳ファイルのパターン
+            [
+                'type' => 'phpArray', // 翻訳ソースの種類 (例: gettext、phpArray、ini)
+                'base_dir' => getcwd() . '/data/language/ja', // それらが格納されているベースディレクトリ
+                'pattern' => 'Zend_Validate.php', // 使用するファイルを特定するためのファイルパターン
+            ],
+        ],
+    ],
 ];
